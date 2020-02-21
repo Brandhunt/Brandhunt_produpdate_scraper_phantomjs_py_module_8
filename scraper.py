@@ -1,24 +1,32 @@
-# This is a template for a Python scraper on morph.io (https://morph.io)
-# including some code snippets below that you should find helpful
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
 
-# import scraperwiki
-# import lxml.html
-#
-# # Read in a page
-# html = scraperwiki.scrape("http://foo.com")
-#
-# # Find something on the page using css selectors
-# root = lxml.html.fromstring(html)
-# root.cssselect("div[align='left']")
-#
-# # Write out to the sqlite database using scraperwiki library
-# scraperwiki.sqlite.save(unique_keys=['name'], data={"name": "susan", "occupation": "software developer"})
-#
-# # An arbitrary query against the database
-# scraperwiki.sql.select("* from data where 'name'='peter'")
+#  /|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\/|\  
+# <   -  Brandhunt Product Update Scraper Module  -   >
+#  \|/\|/\|/\|/\|/\|/\|/\|/\|/\|/\|/\|/\|/\|/\|/\|/\|/
 
-# You don't have to do things with the ScraperWiki and lxml libraries.
-# You can use whatever libraries you want: https://morph.io/documentation/python
-# All that matters is that your final data is written to an SQLite database
-# called "data.sqlite" in the current working directory which has at least a table
-# called "data".
+# --- IMPORT SECTION --- #
+
+import os
+import requests
+import json
+import importlib.util
+
+ext_py_mod_url = os.environ['MORPH_GET_SCRIPT_URL']
+
+r = requests.get(ext_py_mod_url)
+jsonpy = json.loads(r.content)
+filecont = jsonpy[0]['file_cont']
+filecont = json.loads(filecont)
+
+spec = importlib.util.spec_from_loader('helper', loader=None)
+helper = importlib.util.module_from_spec(spec)
+newcont = ''
+
+del filecont[-16:-1]
+
+for cont in filecont:
+    newcont = newcont + cont
+    #print(cont)
+exec(newcont, helper.__dict__)
+exec('mainfunc(maxlimit=2000)', helper.__dict__)

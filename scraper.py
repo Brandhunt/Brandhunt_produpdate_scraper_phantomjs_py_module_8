@@ -29,4 +29,4 @@ for cont in filecont:
     newcont = newcont + cont
     #print(cont)
 exec(newcont, helper.__dict__)
-exec('mainfunc()', helper.__dict__)
+exec('mainfunc(0)', helper.__dict__)

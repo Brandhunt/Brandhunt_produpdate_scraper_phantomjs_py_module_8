@@ -30,4 +30,4 @@ for cont in filecont:
     newcont = newcont + cont
     #print(cont)
 exec(newcont, helper.__dict__)
-exec('mainfunc(' + int(max_prods) + ')', helper.__dict__)
+exec('mainfunc(' + str(max_prods) + ')', helper.__dict__)

@@ -13,6 +13,7 @@ import json
 import importlib.util
 
 ext_py_mod_url = os.environ['MORPH_GET_SCRIPT_URL']
+max_prods = os.environ['MORPH_MAX_PRODS']
 
 r = requests.get(ext_py_mod_url)
 jsonpy = json.loads(r.content)
@@ -29,4 +30,4 @@ for cont in filecont:
     newcont = newcont + cont
     #print(cont)
 exec(newcont, helper.__dict__)
-exec('mainfunc(0)', helper.__dict__)
+exec('mainfunc(' + int(max_prods) + ')', helper.__dict__)
